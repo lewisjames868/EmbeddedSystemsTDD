@@ -4,7 +4,7 @@ Just me experimenting with TDD for Embedded Systems
 # Getting started
 This project is intended to be run on an Olimex STM32-P107 development board, programmed with a Segger j-link adapter.
 
-To compile and link run ./build.sh
+To compile and link run make
 
 To start the openocd server, run
 
