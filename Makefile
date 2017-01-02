@@ -19,7 +19,7 @@ main.elf: $(objs)
 
 # $(RM) is rm -f by default
 clean:
-	$(RM) $(objs) $(deps) main.elf
+	$(RM) $(objs) $(deps) main.elf TimerTest
 
 test: TimerTest
 
