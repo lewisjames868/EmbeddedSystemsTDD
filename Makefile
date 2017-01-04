@@ -22,8 +22,12 @@ clean:
 	$(RM) $(objs) $(deps) main.elf stat_led_test.out
 
 test: stat_led_test.out
+	./stat_led_test.out
 
 stat_led_test.out: test/stat_led_test.c test/unity.c src/stat_led.c
 	$(LINUX_CC) -Wpedantic -Itest -Iinclude -DSTM32F10X_CL $^ -o $@
 
 -include $(deps)
+
+program: main.elf
+	openocd -c "interface jlink" -f stm32f1x.cfg -c"program $< verify reset exit"
