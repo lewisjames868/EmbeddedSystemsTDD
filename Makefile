@@ -8,10 +8,10 @@ main.elf: $(objs)
 	$(ARM_CC) -mcpu=cortex-m3 -mlittle-endian -mthumb -DSTM32F10X_CL -Tstm32_flash.ld -Wl,--gc-sections $^ -o $@
 
 %.o: %.c
-	$(ARM_CC) -Wall -mcpu=cortex-m3 -mlittle-endian -mthumb -Iinclude -DSTM32F10X_CL -MMD -c $^ -o $@
+	$(ARM_CC) -Wpedantic -Wall -mcpu=cortex-m3 -mlittle-endian -mthumb -Iinclude -DSTM32F10X_CL -MMD -c $^ -o $@
 
 %.o: %.s
-	$(ARM_CC) -Wall -mcpu=cortex-m3 -mlittle-endian -mthumb -Iinclude -DSTM32F10X_CL -MMD -c $^ -o $@
+	$(ARM_CC) -Wpedantic -Wall -mcpu=cortex-m3 -mlittle-endian -mthumb -Iinclude -DSTM32F10X_CL -MMD -c $^ -o $@
 
 .PHONY: clean
 
@@ -24,6 +24,6 @@ clean:
 test: TimerTest
 
 TimerTest: test/TimerTest.c test/unity.c
-	$(LINUX_CC) -Itest $^ -o $@
+	$(LINUX_CC) -Wpedantic -Itest $^ -o $@
 
 -include $(deps)
