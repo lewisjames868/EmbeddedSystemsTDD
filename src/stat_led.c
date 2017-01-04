@@ -21,6 +21,10 @@ void _vStatLedResetState(void)
 
 void vStatLedInit(void)
 {
+	if(0x0 == _APB2ENR && 0x00 == _CRL && 0x0 == _ODR) 
+	{
+		_vStatLedResetState();
+	}
 	/* Enable PORT C clock */
 	*_APB2ENR |= RCC_APB2ENR_IOPCEN;
 	/* Configure GPIOC pin as general purpose push-pull */
