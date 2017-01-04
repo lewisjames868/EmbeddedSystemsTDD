@@ -1,8 +1,5 @@
 #include <stm32f10x.h>
- 
-#define LED_PIN 6
-#define LED_ON() GPIOC->BSRR = (1 << LED_PIN)
-#define LED_OFF() GPIOC->BRR = (1 << LED_PIN)
+#include "stat_led.h"
  
 void delay(uint32_t d) {
     volatile uint32_t c = d;
@@ -11,23 +8,15 @@ void delay(uint32_t d) {
 }
 
 int main() {
-	/* Enable PORT C clock */
-	RCC->APB2ENR |= RCC_APB2ENR_IOPCEN;
-	/* Configure GPIOC pin as general purpose push-pull */
-	GPIOC->CRL &= ~(GPIO_CRL_CNF6_0 | GPIO_CRL_CNF6_1);
-	/* Configure GPIOC pin as output, 50MHz */
-	GPIOC->CRL |= (GPIO_CRL_MODE6_0 | GPIO_CRL_MODE6_1);
- 
-
-
+	vStatLedInit(); 
 
 	while(1) {
 		/* Turn on the LED */
-		LED_ON();
+		vStatLedOn();
 
 		delay(1000000);
 
-		LED_OFF();
+		vStatLedOff();
 
 		delay(1000000);
 	}

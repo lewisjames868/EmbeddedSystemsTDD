@@ -8,10 +8,10 @@ main.elf: $(objs)
 	$(ARM_CC) -mcpu=cortex-m3 -mlittle-endian -mthumb -DSTM32F10X_CL -Tstm32_flash.ld -Wl,--gc-sections $^ -o $@
 
 %.o: %.c
-	$(ARM_CC) -Wpedantic -Wall -mcpu=cortex-m3 -mlittle-endian -mthumb -Iinclude -DSTM32F10X_CL -MMD -c $^ -o $@
+	$(ARM_CC) -Wpedantic -Wall -mcpu=cortex-m3 -mlittle-endian -mthumb -Iinclude -DSTM32F10X_CL -MMD -c $< -o $@
 
 %.o: %.s
-	$(ARM_CC) -Wpedantic -Wall -mcpu=cortex-m3 -mlittle-endian -mthumb -Iinclude -DSTM32F10X_CL -MMD -c $^ -o $@
+	$(ARM_CC) -Wpedantic -Wall -mcpu=cortex-m3 -mlittle-endian -mthumb -Iinclude -DSTM32F10X_CL -MMD -c $< -o $@
 
 .PHONY: clean
 
@@ -19,11 +19,11 @@ main.elf: $(objs)
 
 # $(RM) is rm -f by default
 clean:
-	$(RM) $(objs) $(deps) main.elf TimerTest
+	$(RM) $(objs) $(deps) main.elf stat_led_test.out
 
-test: TimerTest
+test: stat_led_test.out
 
-TimerTest: test/TimerTest.c test/unity.c
-	$(LINUX_CC) -Wpedantic -Itest $^ -o $@
+stat_led_test.out: test/stat_led_test.c test/unity.c src/stat_led.c
+	$(LINUX_CC) -Wpedantic -Itest -Iinclude -DSTM32F10X_CL $^ -o $@
 
 -include $(deps)

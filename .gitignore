@@ -1,10 +1,3 @@
-# Ignore all
-*
-
-# Unignore with extension
-!*.*
-!Makefile
-
 # Object files
 *.o
 *.ko
