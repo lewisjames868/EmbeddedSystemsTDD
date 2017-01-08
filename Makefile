@@ -31,5 +31,8 @@ stat_led_test.out: test/stat_led_test.c test/unity.c src/stat_led.c
 
 -include $(deps)
 
-program: main.elf
+program: main.elf poweron
 	openocd -c "interface jlink" -f stm32f1x.cfg -c"program $< verify reset exit"
+
+poweron:
+	JLinkExe -if JTAG -autoconnect 1 -CommanderScript poweron.jlink	
