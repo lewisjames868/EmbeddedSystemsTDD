@@ -28,6 +28,9 @@
 *.x86_64
 *.hex
 
+# Build System Cache Files
+*.d
+
 # Debug files
 *.dSYM/
 *.su
