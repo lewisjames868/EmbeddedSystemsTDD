@@ -1,5 +1,6 @@
 LINUX_CC = gcc
 ARM_CC = arm-none-eabi-gcc
+ARM_LD = arm-none-eabi-ld
 CC_FLAGS = -Werror -Wpedantic -Wall
 ARM_CC_FLAGS = -mcpu=cortex-m3 -mlittle-endian -mthumb
 srcs = $(wildcard src/*.c src/*.s)
@@ -7,8 +8,8 @@ objs = $(patsubst %.s, %.o, $(patsubst  %.c, %.o, $(srcs)))
 deps = $(filter-out %.s, $(srcs:.c=.d))
 
 main.elf: $(objs)
-	$(ARM_CC) $(CC_FLAGS) $(ARM_CC_FLAGS) -DSTM32F10X_CL -Tstm32_flash.ld -Wl,--gc-sections $^ -o $@
-
+	$(ARM_LD) -Tstm32_flash.ld --gc-sections -nostdlib -nostartfiles -nodefaultlibs $^ -o $@
+ 
 %.o: %.c
 	$(ARM_CC) $(CC_FLAGS) $(ARM_CC_FLAGS) -Iinclude -DSTM32F10X_CL -MMD -c $< -o $@
 
